@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" type="text/css" href="style.css">
+</head>
+
+<body>
+    <div>
+        <h1 class="headline">Drag & drop</h1>
+        <div id="dragDrop">
+            <div id="left">
+                <div class="list" draggable="true">
+                    <p>list 1</p>
+                </div>
+                <div class="list" draggable="true">
+                    <p>list 2</p>
+                </div>
+                <div class="list" draggable="true">
+                    <p>list 3</p>
+                </div>
+                <div class="list" draggable="true">
+                    <p>list 4</p>
+                </div>
+                <div class="list" draggable="true">
+                    <p>list 5</p>
+                </div>
+            </div>
+            <div id="right">
+
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let lists = document.getElementsByClassName('list');
+        let left = document.getElementById('left');
+        let right = document.getElementById('right');
+
+        // for (list of lists) {
+
+        //     list.addEventListener('dragstart', function (e) {
+        //         let selected = e.target;
+        //         console.log(selected);
+
+        //         right.addEventListener('dragover', function (e) {
+        //             event.preventDefault();
+        //         })
+        //         right.addEventListener('drop', function (e) {
+        //             right.appendChild(selected);
+        //             console.log(11111)
+        //             selected = null;
+        //         })
+
+        //         left.addEventListener('dragover', function (e) {
+        //             event.preventDefault();
+        //         })
+        //         left.addEventListener('drop', function (e) {
+        //             left.appendChild(selected);
+        //             selected = null;
+        //         })
+        //     })
+
+        // }
+
+
+        // ..............................................................
+        const items = left.querySelectorAll(".list");
+        console.log(items);
+
+        items.forEach(item => {
+            item.addEventListener("dragstart", () => {
+                // Adding dragging class to item after a delay
+                setTimeout(() => item.classList.add("dragging"), 0);
+            });
+            // Removing dragging class from item on dragend event
+            item.addEventListener("dragend", () => item.classList.remove("dragging"));
+        });
+
+        const initSortableList = (e, box) => {
+            e.preventDefault();
+            const draggingItem = document.querySelector(".dragging");
+            // Getting all items except currently dragging and making array of them
+            let siblings = [...box.querySelectorAll(".list:not(.dragging)")];
+
+            // Finding the sibling after which the dragging item should be placed
+            let nextSibling = siblings.find(sibling => {
+                return e.clientY <= sibling.offsetTop + sibling.offsetHeight / 2;
+            });
+
+            // Inserting the dragging item before the found sibling
+            box.insertBefore(draggingItem, nextSibling);
+        }
+
+        left.addEventListener("dragover", function (event) {
+            initSortableList(event, left);
+        });
+        left.addEventListener("dragenter", e => e.preventDefault());
+
+
+        right.addEventListener("dragover", function (event) {
+            initSortableList(event, right);
+        });
+        right.addEventListener("dragenter", e => e.preventDefault());
+
+    </script>
+</body>
+
+</html>

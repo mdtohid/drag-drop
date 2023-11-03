@@ -1,0 +1,50 @@
+body {
+    background-color: rgb(58, 58, 165);
+}
+
+.headline {
+    color: azure;
+    text-align: center;
+    margin-block: 40px;
+}
+
+#dragDrop {
+    display: flex;
+    width: 50vw;
+    margin-inline: auto;
+    justify-content: space-between;
+}
+
+#left {
+    display: flex;
+    flex-direction: column;
+    width: 20vw;
+    border: 1px dashed #fff;
+    border-radius: 10px;
+}
+
+#right {
+    display: flex;
+    flex-direction: column;
+    width: 20vw;
+    border: 1px dashed #fff;
+    border-radius: 10px;
+}
+
+.list {
+    margin: 10px;
+    padding: 5px;
+    background-color: rgb(242, 105, 105);
+    border-radius: 10px;
+    text-align: center;
+    font-size: large;
+}
+
+.list.dragging {
+    opacity: 0.6;
+}
+
+.list.dragging :where(.list p) {
+    opacity: 0;
+    
+}
